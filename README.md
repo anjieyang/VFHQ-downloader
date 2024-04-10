@@ -14,6 +14,7 @@ VFHQ-downloader is a Python-based utility designed for the easy downloading and 
 1. Ensure the metadata files are located in the `meta_info/` directory.
 2. Run `main.py` to start the downloading and processing pipeline.
 3. Processed videos will be available in the `data/outputs/` directory.
+4. Make sure you modify `VIDEO_NUM` in `config.py`.
 
 ## Note
 
