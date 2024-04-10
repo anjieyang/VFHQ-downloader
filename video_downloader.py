@@ -7,8 +7,15 @@ from config import VIDEO_EXTENSIONS
 class VideoDownloader:
     @staticmethod
     def download_video(output_dir, meta_info):
-        video_path = os.path.join(output_dir, f"vid_{meta_info.video_id}")
+        for ext in VIDEO_EXTENSIONS:
+            existing_video_path = os.path.join(
+                output_dir, f"vid_{meta_info.video_id}{ext}")
+            if os.path.isfile(existing_video_path):
+                logging.info(f'Video for ID {meta_info.video_id} already downloaded at {
+                             existing_video_path}')
+                return existing_video_path
 
+        video_path = os.path.join(output_dir, f"vid_{meta_info.video_id}")
         command = [
             "yt-dlp",
             f"https://www.youtube.com/watch?v={meta_info.video_id}",
@@ -17,8 +24,8 @@ class VideoDownloader:
             "--external-downloader", "aria2c",
             "--external-downloader-args", "-x 16 -s 16 -k 1M --console-log-level=warn --quiet=true",
             "--progress",
-            "--concurrent-fragments", "5",
-            "--buffer-size", "16K",
+            "--concurrent-fragments", "16",
+            "--buffer-size", "32K",
             "--http-chunk-size", "10M",
             "--fragment-retries", "infinite"
         ]
@@ -26,8 +33,8 @@ class VideoDownloader:
         try:
             subprocess.check_call(command)
             for ext in VIDEO_EXTENSIONS:
-                if os.path.isfile(video_path + ext):
-                    downloaded_file = video_path + ext
+                downloaded_file = video_path + ext
+                if os.path.isfile(downloaded_file):
                     logging.info(f'Successfully downloaded video for ID {
                                  meta_info.video_id} to {downloaded_file}')
                     return downloaded_file
