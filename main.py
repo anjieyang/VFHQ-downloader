@@ -22,7 +22,7 @@ def process_single_file(meta_file, meta_dir, video_dir, output_dir):
     try:
         meta_info = MetaParser.parse_clip_meta(meta_path)
         video_file = VideoDownloader.download_video(
-            video_dir, meta_info.video_id)
+            video_dir, meta_info)
         if video_file:
             VideoProcessor.crop_video(meta_info, video_file, output_dir)
     except Exception as e:
