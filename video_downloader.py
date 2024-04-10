@@ -8,9 +8,7 @@ class VideoDownloader:
     @staticmethod
     def download_video(output_dir, meta_info):
         video_path = os.path.join(
-            output_dir, f"clip_{meta_info.video_id}_{meta_info.pid}")
-        postprocessor_args = f"ffmpeg:-ss {
-            meta_info.start_t} -to {meta_info.end_t}"
+            output_dir, f"vid_{meta_info.video_id}")
 
         command = [
             "yt-dlp",
@@ -19,8 +17,7 @@ class VideoDownloader:
             "-f", "bestvideo[ext=mp4]+bestaudio[ext=m4a]/best[ext=mp4]/best",
             "--external-downloader", "aria2c",
             "--external-downloader-args", "-x 8 -s 8 -k 1M --console-log-level=warn --quiet=true",
-            "--progress",
-            "--postprocessor-args", postprocessor_args
+            "--progress"
         ]
 
         try:
@@ -29,14 +26,14 @@ class VideoDownloader:
             for ext in VIDEO_EXTENSIONS:
                 if os.path.isfile(video_path + ext):
                     downloaded_file = video_path + ext
-                    logging.info(f'Successfully downloaded video clip for ID {
-                                 meta_info.video_id}_{meta_info.pid} to {downloaded_file}')
+                    logging.info(f'Successfully downloaded video for ID {
+                                 meta_info.video_id} to {downloaded_file}')
                     return downloaded_file
         except subprocess.CalledProcessError as e:
-            logging.error(f'Failed to download video clip for ID {
-                          meta_info.video_id}_{meta_info.pid}: {e}')
+            logging.error(f'Failed to download video for ID {
+                          meta_info.video_id}: {e}')
         except Exception as e:
-            logging.error(f'Unexpected error occurred while downloading video clip for ID {
-                          meta_info.video_id}_{meta_info.pid}: {e}')
+            logging.error(f'Unexpected error occurred while downloading video for ID {
+                          meta_info.video_id}: {e}')
 
         return None

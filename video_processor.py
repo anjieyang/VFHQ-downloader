@@ -16,8 +16,8 @@ class VideoProcessor:
             clip_meta.video_id[1:] if clip_meta.video_id.startswith(
                 "-") else clip_meta.video_id
         clip = VideoFileClip(video_file)
-        # trimmed_clip = clip.subclip(clip_meta.start_t, clip_meta.end_t)
-        cropped_clip = clip.crop(
+        trimmed_clip = clip.subclip(clip_meta.start_t, clip_meta.end_t)
+        cropped_clip = trimmed_clip.crop(
             x1=clip_meta.x0, y1=clip_meta.y0, x2=clip_meta.x1, y2=clip_meta.y1)
 
         output_file = os.path.join(
