@@ -3,3 +3,4 @@ meta_info/
 .DS_Store
 __pycache__/
 data
+video_processing.log

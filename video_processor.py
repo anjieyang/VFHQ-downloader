@@ -8,7 +8,8 @@ class VideoProcessor:
     @staticmethod
     def crop_video(clip_meta: ClipMeta, video_file, output_path):
         if not video_file:
-            logging.info(f"No video file provided for {clip_meta.video_id}.")
+            logging.info(f"No video file provided for {
+                         clip_meta.video_id}_{clip_meta.pid}.")
             return
 
         safe_video_id = 'anjie' + \
@@ -19,10 +20,11 @@ class VideoProcessor:
         cropped_clip = clip.crop(
             x1=clip_meta.x0, y1=clip_meta.y0, x2=clip_meta.x1, y2=clip_meta.y1)
 
-        output_file = os.path.join(output_path, f"{safe_video_id}.mp4")
+        output_file = os.path.join(
+            output_path, f"{safe_video_id}_{clip_meta.pid}.mp4")
         cropped_clip.write_videofile(
             output_file, codec="libx264", preset="ultrafast", audio_codec="aac", threads=4)
 
         clip.close()
-        os.rename(output_file, os.path.join(
-            output_path, f"{clip_meta.video_id}.mp4"))
+        os.rename(output_file, os.path.join(output_path, f"{
+                  clip_meta.video_id}_{clip_meta.pid}.mp4"))
