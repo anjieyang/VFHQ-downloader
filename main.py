@@ -31,7 +31,8 @@ def main():
     max_workers = min(32, max(4, multiprocessing.cpu_count() - 1))
 
     meta_files = [f for f in os.listdir(META_DIR) if f.endswith('.txt')]
-    meta_files = meta_files[:VIDEO_NUM]
+
+    # meta_files = meta_files[:VIDEO_NUM]
 
     with concurrent.futures.ThreadPoolExecutor(max_workers=max_workers) as executor:
         futures = [executor.submit(process_single_file, meta_file, META_DIR, VIDEO_DIR, OUTPUT_DIR)
