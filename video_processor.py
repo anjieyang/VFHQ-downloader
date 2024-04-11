@@ -22,9 +22,13 @@ class VideoProcessor:
 
         output_file = os.path.join(
             output_path, f"{safe_video_id}_{clip_meta.pid}.mp4")
+
         cropped_clip.write_videofile(
-            output_file, codec="libx264", preset="ultrafast", audio_codec="aac", threads=4)
+            output_file, codec="libx264", preset="ultrafast", audio_codec="aac", threads=4, logger=None)
 
         clip.close()
-        os.rename(output_file, os.path.join(output_path, f"{
-                  clip_meta.video_id}_{clip_meta.pid}.mp4"))
+
+        final_output_file = os.path.join(
+            output_path, f"{clip_meta.video_id}_{clip_meta.pid}.mp4")
+        os.rename(output_file, final_output_file)
+        logging.info(f"Video processed and saved as {final_output_file}")
