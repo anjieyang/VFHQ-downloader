@@ -8,7 +8,7 @@ import sys
 class VideoDownloader:
     @staticmethod
     def download_video(output_dir, meta_info, progress_bar):
-        progress_bar.set_description(f"Downloading: ")
+        progress_bar.set_description(f"Downloading")
         for ext in VIDEO_EXTENSIONS:
             existing_video_path = os.path.join(
                 output_dir, f"vid_{meta_info.video_id}{ext}")
