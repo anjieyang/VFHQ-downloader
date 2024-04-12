@@ -2,6 +2,10 @@
 
 VFHQ-downloader is a Python-based utility designed for the easy downloading and processing of videos from the [VFHQ dataset](https://liangbinxie.github.io/projects/vfhq/).
 
+## Warnning
+
+This may cause [temporary IP block](https://github.com/yt-dlp/yt-dlp/issues/7860) by YouTube.
+
 ## Setup
 
 1. Clone the repository or download the source code.
